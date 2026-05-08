@@ -1,0 +1,266 @@
+<!-- Roboloans Chatbot - WordPress Embed Code -->
+<!-- Copy this entire code and paste into WordPress page/post using HTML editor -->
+
+<div id="chatToggle"></div>
+<div id="chatWrapper">
+
+<div class="shell">
+  <div class="left-panel">
+    <div class="avatar-wrap">🤖</div>
+    <div class="left-name">Robo</div>
+    <div class="left-role">Your Roboloans AI Assistant<br>Eligibility &amp; Borrowing Power</div>
+    <div class="left-badge"><span class="online-dot"></span> Online now</div>
+    <div class="progress-side">
+      <div class="progress-side-label">
+        <span id="progressLabel">Getting started...</span>
+        <span id="progressPct">0%</span>
+      </div>
+      <div class="progress-track"><div class="progress-bar-inner" id="progressFill"></div></div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="chat-topbar">
+      <div class="topbar-info">
+        <div class="topbar-avatar">🤖</div>
+        <div>
+          <div class="topbar-name">Roboloans Assistant</div>
+          <div class="topbar-sub">Eligibility check — no credit impact</div>
+        </div>
+      </div>
+      <button class="topbar-menu" title="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+      <button class="topbar-menu" onclick="closeChat()" title="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div id="setbackContainer"><button class="setback-text-btn" onclick="goBack()">← Setback</button></div>
+    <div class="chat-input-area" id="inputArea" style="display:none;">
+      <div class="input-row">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Message..." autocomplete="off"/>
+        <button class="send-btn" onclick="handleSend()">
+          <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+      <div class="input-hint" id="inputHint"></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<style>
+/* Roboloans Chatbot Styles */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --brand:#2563EB; --brand-dark:#1d4ed8; --brand-light:#eff6ff;
+  --user-bg:#dbeafe; --user-text:#1e3a5f; --bot-text:#111827;
+  --muted:#6b7280; --border:#e5e7eb; --panel-bg:#f9fafb;
+  --font:'Plus Jakarta Sans',sans-serif;
+  --ko-bg:#fef2f2; --ko-border:#fecaca; --ko-text:#991b1b;
+  --green:#16a34a; --green-light:#dcfce7;
+}
+.shell {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  border-radius: 16px;
+  display: flex !important;
+  overflow: hidden;
+}
+.left-panel { width:200px; flex-shrink:0; background:linear-gradient(160deg,#1e3a8a 0%,#2563eb 50%,#60a5fa 100%); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px 8px; position:relative; overflow:hidden; }
+.left-panel::before { content:''; position:absolute; width:220px; height:220px; border-radius:50%; background:rgba(255,255,255,0.06); top:-60px; left:-60px; }
+.left-panel::after  { content:''; position:absolute; width:180px; height:180px; border-radius:50%; background:rgba(255,255,255,0.05); bottom:-40px; right:-50px; }
+.avatar-wrap { width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.15); border:2px solid rgba(255,255,255,0.4); display:flex; align-items:center; justify-content:center; font-size:16px; margin-bottom:6px; position:relative; z-index:1; box-shadow:0 4px 12px rgba(0,0,0,0.2); }
+.left-name { font-size:13px; font-weight:700; color:#fff; text-align:center; margin-bottom:3px; z-index:1; position:relative; }
+.left-role { font-size:9px; color:rgba(255,255,255,0.7); text-align:center; line-height:1.2; z-index:1; position:relative; }
+.left-badge { margin-top:8px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); border-radius:8px; padding:3px 6px; font-size:9px; font-weight:600; color:#fff; display:flex; align-items:center; gap:3px; z-index:1; position:relative; }
+.online-dot { width:3px; height:3px; background:#4ade80; border-radius:50%; animation:pulse2 2s ease-in-out infinite; }
+@keyframes pulse2 { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+.progress-side { margin-top:8px; width:100%; z-index:1; position:relative; }
+.progress-side-label { font-size:9px; color:rgba(255,255,255,0.65); margin-bottom:3px; font-weight:500; display:flex; justify-content:space-between; }
+.progress-track { height:4px; background:rgba(255,255,255,0.2); border-radius:4px; overflow:hidden; }
+.progress-bar-inner { height:100%; background:#fff; border-radius:4px; transition:width 0.5s ease; width:0%; }
+.right-panel { flex:1; background:#fff; display:flex; flex-direction:column; min-width:0; max-width:320px; }
+.chat-topbar { padding:12px 15px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-shrink:0; background:#fff; }
+.topbar-info { display:flex; align-items:center; gap:10px; }
+.topbar-avatar { width:30px; height:30px; border-radius:50%; background:var(--brand-light); display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; }
+.topbar-name { font-size:12px; font-weight:700; color:var(--bot-text); }
+.topbar-sub  { font-size:9px; color:var(--muted); margin-top:1px; }
+.topbar-menu { background:none; border:none; cursor:pointer; color:var(--muted); padding:6px; border-radius:8px; }
+.topbar-menu svg { width:20px; height:20px; display:block; }
+.chat-messages { flex:1; overflow-y:auto; padding:15px 15px 6px; display:flex; flex-direction:column; gap:12px; scroll-behavior:smooth; }
+.chat-messages::-webkit-scrollbar { width:4px; }
+.chat-messages::-webkit-scrollbar-thumb { background:#e5e7eb; border-radius:2px; }
+.msg { display:flex; align-items:flex-end; gap:10px; }
+.msg.bot  { justify-content:flex-start; }
+.msg.user { justify-content:flex-end; }
+.msg-avatar { width:25px; height:25px; border-radius:50%; background:var(--brand-light); display:flex; align-items:center; justify-content:center; font-size:10px; flex-shrink:0; align-self:flex-end; }
+.bubble { max-width:75%; padding:8px 12px; border-radius:16px; font-size:12px !important; line-height:1.5; word-break:break-word; }
+.msg.bot  .bubble { background:var(--panel-bg); color:var(--bot-text); border-bottom-left-radius:4px; border:1px solid var(--border); font-size:12px !important; }
+.msg.user .bubble { background:var(--user-bg); color:var(--user-text); border-bottom-right-radius:4px; font-weight:500; font-size:12px !important; }
+.typing-dots { display:flex; gap:5px; padding:4px 2px; align-items:center; }
+.typing-dots span { width:7px; height:7px; background:#9ca3af; border-radius:50%; animation:tdot 1.2s ease-in-out infinite; }
+.typing-dots span:nth-child(2){animation-delay:0.2s;} .typing-dots span:nth-child(3){animation-delay:0.4s;}
+@keyframes tdot { 0%,60%,100%{transform:translateY(0);} 30%{transform:translateY(-5px);} }
+.section-divider { text-align:center; font-size:11px; color:var(--muted); font-weight:600; letter-spacing:0.8px; text-transform:uppercase; padding:2px 0; position:relative; }
+.section-divider::before,.section-divider::after { content:''; position:absolute; top:50%; height:1px; background:var(--border); width:30%; }
+.section-divider::before{left:2%;} .section-divider::after{right:2%;}
+.btn-group { display:flex; flex-wrap:wrap; gap:6px; padding:4px 0 4px 30px; }
+.choice-btn { background:#fff; border:1.5px solid var(--brand); color:var(--brand); border-radius:16px; padding:6px 12px; font-size:11px; font-weight:600; font-family:var(--font); cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+.choice-btn:hover{background:var(--brand-light);} .choice-btn.selected{background:var(--brand);color:#fff;pointer-events:none;}
+.chat-input-area { padding:10px 12px 12px; border-top:1px solid var(--border); background:#fff; flex-shrink:0; position:relative; }
+.input-row { display:flex; gap:6px; align-items:center; background:var(--panel-bg); border:1.5px solid var(--border); border-radius:25px; padding:6px 6px 6px 12px; transition:border 0.2s; }
+.input-row:focus-within{border-color:var(--brand);background:#fff;}
+.chat-input { flex:1; border:none; outline:none; background:transparent; font-size:12px; font-family:var(--font); color:var(--bot-text); }
+.chat-input::placeholder{color:#9ca3af;}
+.send-btn { width:30px; height:30px; border-radius:50%; background:var(--brand); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background 0.15s,transform 0.1s; }
+.send-btn:hover{background:var(--brand-dark);} .send-btn:active{transform:scale(0.95);}
+.send-btn svg{width:14px;height:14px;fill:#fff;}
+.input-hint{font-size:11px;color:var(--muted);padding:5px 4px 0;text-align:center;}
+
+/* FLOAT BUTTON */
+#chatToggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #2563EB;
+  color: #fff;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 999999;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* CHAT WRAPPER */
+#chatWrapper {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 500px;
+  height: 550px;
+  display: none;
+  z-index: 999999;
+  top: auto;
+  left: auto;
+}
+
+@media(max-width:600px){.left-panel{display:none;}.shell{max-height:100vh;border-radius:0;height:100vh;}}
+@media(max-width:500px){
+#chatWrapper{
+width: 90%;
+height: 60vh;
+right: 5%;
+bottom: 10px;
+}}
+</style>
+
+<script>
+// Chatbot JavaScript Code
+let isDataSent=false, isKnockedOut=false, inputLocked=false, currentStepId="";
+let loanCount=0, cardCount=0;
+const answers={}, historyStack=[];
+
+const chatMessages =document.getElementById("chatMessages");
+const inputArea    =document.getElementById("inputArea");
+const chatInput    =document.getElementById("chatInput");
+const inputHint    =document.getElementById("inputHint");
+const progressFill =document.getElementById("progressFill");
+const progressLabel=document.getElementById("progressLabel");
+const progressPct  =document.getElementById("progressPct");
+
+// Flow data (simplified version)
+const flow = [
+  {id:"welcome",type:"bot",text:"Hey! <span class='emoji'>👋</span> I can help you check if you're eligible and give you a rough idea of your borrowing power.\n\nIt's quick and won't affect your credit file at all."},
+  {id:"name",type:"text",text:"First up, what's your full name?",placeholder:"e.g. John Smith",key:"Full_Name"},
+  {id:"email",type:"text",text:"Thanks {name}! What's the best email to send your quote and results to?",placeholder:"e.g. john@email.com",key:"Email"},
+  // Add more flow steps as needed...
+];
+
+const stepMap={};
+flow.forEach(s=>stepMap[s.id]=s);
+
+function interpolate(t){
+  const fn=(answers.Full_Name||"").split(" ")[0]||"";
+  return t.replace(/\{name\}/g,fn);
+}
+
+function scrollBottom(){setTimeout(()=>chatMessages.scrollTop=chatMessages.scrollHeight,80);}
+function updateProgress(){const ds=flow.filter(s=>s.key);const pct=Math.round((ds.filter(s=>answers[s.key]!==undefined).length/ds.length)*100);progressFill.style.width=pct+"%";progressPct.textContent=pct+"%";progressLabel.textContent="Getting started...";}
+function showInputArea(show,placeholder,hint){placeholder=placeholder||"Type your answer...";hint=hint||"";inputArea.style.display=show?"block":"none";if(show){chatInput.placeholder=placeholder;inputHint.textContent=hint;chatInput.value="";setTimeout(()=>chatInput.focus(),100);}}
+
+function addBotBubble(text){return new Promise(resolve=>{const t=document.createElement("div");t.className="msg bot";t.innerHTML='<div class="msg-avatar">🤖</div><div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>';chatMessages.appendChild(t);scrollBottom();setTimeout(()=>{t.remove();const m=document.createElement("div");m.className="msg bot";m.innerHTML='<div class="msg-avatar">🤖</div><div class="bubble">'+interpolate(text).replace(/\n/g,"<br>")+'</div>';chatMessages.appendChild(m);scrollBottom();resolve();},800);});}
+
+function addUserBubble(text){const m=document.createElement("div");m.className="msg user";m.innerHTML='<div class="bubble">'+text+'</div>';chatMessages.appendChild(m);scrollBottom();}
+
+function showButtons(options,onSelect){const g=document.createElement("div");g.className="btn-group";options.forEach(opt=>{const b=document.createElement("button");b.className="choice-btn";b.textContent=opt.l||opt;b.onclick=()=>{g.querySelectorAll(".choice-btn").forEach(x=>{x.classList.remove("selected");x.disabled=true;});b.classList.add("selected");onSelect(opt.v||opt,opt.l||opt);};g.appendChild(b);});chatMessages.appendChild(g);scrollBottom();}
+
+async function runStep(stepId){
+  if(!stepId){showInputArea(false);return;}
+  const step=stepMap[stepId];
+  if(!step){showInputArea(false);return;}
+  currentStepId=stepId;updateProgress();inputLocked=true;showInputArea(false);
+  
+  if(step.type==="bot"){
+    const botTxt = interpolate(step.text);
+    await addBotBubble(botTxt);
+    return;
+  }
+  
+  const stepText = interpolate(step.text);
+  await addBotBubble(stepText);
+  
+  if(step.type==="buttons"){
+    inputLocked=false;
+    showButtons(step.options,async(val,label)=>{addUserBubble(label);if(step.key)answers[step.key]=val;});
+  } else {
+    showInputArea(true,step.placeholder||"Type your answer...");
+    inputLocked=false;
+  }
+}
+
+async function handleSend(){const val=chatInput.value.trim();if(!val||inputLocked)return;const step=stepMap[currentStepId];if(!step)return;addUserBubble(val);chatInput.value="";if(step.key)answers[step.key]=val;showInputArea(false);}
+
+chatInput.addEventListener("keydown",e=>{if(e.key==="Enter"&&!inputLocked)handleSend();});
+
+// Auto-open chat for first-time visitors
+function checkFirstVisit() {
+  const hasVisited = localStorage.getItem('roboloans_chat_visited');
+  if (!hasVisited) {
+    setTimeout(() => {
+      wrapper.style.display = "block";
+      localStorage.setItem('roboloans_chat_visited', 'true');
+    }, 2000);
+  }
+}
+
+// Initialize
+const toggle = document.getElementById("chatToggle");
+const wrapper = document.getElementById("chatWrapper");
+
+checkFirstVisit();
+
+function closeChat() {
+  wrapper.style.display = "none";
+}
+
+toggle.onclick = () => {
+  wrapper.style.display = wrapper.style.display === "none" ? "block" : "none";
+};
+
+// Start chat
+runStep("welcome");
+</script>

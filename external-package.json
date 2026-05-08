@@ -1,0 +1,29 @@
+{
+  "name": "roboloans-chatbot-server",
+  "version": "1.0.0",
+  "description": "External server for Roboloans chatbot backend",
+  "main": "external-server.js",
+  "scripts": {
+    "start": "node external-server.js",
+    "dev": "nodemon external-server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": [
+    "chatbot",
+    "api",
+    "zoho",
+    "roboloans"
+  ],
+  "author": "Roboloans Team",
+  "license": "MIT"
+}

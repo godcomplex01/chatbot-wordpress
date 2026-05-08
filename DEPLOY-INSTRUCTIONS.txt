@@ -1,0 +1,88 @@
+🚀 STAGING DEPLOYMENT INSTRUCTIONS
+=================================
+
+SITE: https://staging3.roboloans.ai/
+
+STEP 1: WordPress Plugin Upload
+------------------------------
+1. Go to: https://staging3.roboloans.ai/wp-admin
+2. Login with WordPress credentials
+3. Plugins → Add New → Upload Plugin
+4. Upload: wordpress-only-plugin.php
+5. Install Now → Activate Plugin
+
+STEP 2: Upload Assets Files
+---------------------------
+Create folder structure:
+/wp-content/plugins/roboloans-chatbot/
+├── wordpress-only-plugin.php (uploaded)
+└── assets/
+    ├── chatbot-style.css
+    └── wordpress-chatbot-script.js
+
+Upload both files to the assets folder.
+
+STEP 3: Configure Plugin
+-----------------------
+1. In WordPress admin, go to "Roboloans Chatbot" menu
+2. Enter Zoho API Token: 1000.bd0f029855f4cb60b28a9c2ddfafff33.4131d93c21de52816708a3319eb43060
+3. Set Notification Email: your-email@roboloans.ai
+4. Settings:
+   - Auto-Open Chat: Yes
+   - Delay: 2 seconds
+   - Position: Bottom-Right
+   - Site-Wide Display: Yes
+5. Save Changes
+
+STEP 4: Test Chatbot
+--------------------
+1. Visit: https://staging3.roboloans.ai/
+2. Wait 2 seconds - chat should auto-open
+3. Test form submission
+4. Check WordPress admin → Roboloans Chatbot → Submissions
+5. Verify email notifications
+
+STEP 5: Mobile Test
+------------------
+1. Open site on mobile device
+2. Test chatbot functionality
+3. Verify responsive design
+
+FILES NEEDED:
+=============
+✓ wordpress-only-plugin.php
+✓ assets/chatbot-style.css
+✓ assets/wordpress-chatbot-script.js
+
+EXPECTED RESULTS:
+================
+✓ Chatbot appears on staging site
+✓ Auto-opens after 2 seconds
+✓ Forms submit to WordPress database
+✓ Data syncs to Zoho CRM
+✓ Email notifications sent
+✓ Mobile responsive design
+
+TROUBLESHOOTING:
+===============
+❌ If plugin doesn't activate:
+   - Check PHP version (7.4+)
+   - Verify file permissions
+   
+❌ If chatbot doesn't appear:
+   - Check browser console for errors
+   - Verify assets uploaded correctly
+   - Clear WordPress cache
+   
+❌ If forms don't submit:
+   - Check Zoho API token
+   - Verify WordPress AJAX URL
+   - Review debug logs
+
+SUPPORT:
+========
+Check WordPress admin → Roboloans Chatbot → Submissions
+Review browser console for JavaScript errors
+Monitor email for notifications
+
+🎉 SUCCESS: Chatbot live on staging3.roboloans.ai!
