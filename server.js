@@ -168,7 +168,7 @@ async function sendToZoho(data) {
             'https://www.zohoapis.com/crm/v2/Chat_JSON',
             {
                 data: [{
-                    Name: data.Full_Name || 'Unknown',
+                    Last_Name: data.Full_Name || 'Unknown',
                     Email: data.Email || '',
                     Mobile: data.Mobile || '',
                     Chat_JSON: JSON.stringify(data, null, 2)
