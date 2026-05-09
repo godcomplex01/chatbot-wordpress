@@ -131,6 +131,34 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'botv1.html'));
 });
 
+
+app.get('/test-zoho', async (req, res) => {
+  try {
+    const accessToken = await getValidZohoToken();
+
+    const response = await axios.get(
+      'https://www.zohoapis.com.au/crm/v2/settings/modules',
+      {
+        headers: {
+          Authorization: `Zoho-oauthtoken ${accessToken}`
+        }
+      }
+    );
+
+    res.json(response.data);
+
+  } catch (error) {
+    console.log(
+      'Zoho test error:',
+      JSON.stringify(error.response?.data, null, 2)
+    );
+
+    res.status(500).json(
+      error.response?.data || error.message
+    );
+  }
+});
+
 // Handle chatbot submission
 app.post('/api/submit', async (req, res) => {
     try {
