@@ -113,7 +113,7 @@ leadData.Description = JSON.stringify(data, null, 2);
 );
 
 const response = await axios.post(
-    'https://www.zohoapis.com/crm/v2/Leads',
+    'https://www.zohoapis.com/crm/v2/Chat_JSON',
     {
         data: [leadData]
     },
