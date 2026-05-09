@@ -26,7 +26,7 @@ let tokenExpiry = null;
 
 async function getZohoAccessToken() {
     try {
-        const response = await fetch("https://accounts.zoho.com.au/oauth/v2/token", {
+        const response = await fetch("https://accounts.zoho.com/oauth/v2/token", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -75,7 +75,7 @@ async function sendToZoho(data) {
         const accessToken = await getValidZohoToken();
         
         const response = await axios.post(
-            'https://www.zohoapis.com.au/crm/v2/Leads',
+            'https://www.zohoapis.com/crm/v2/Leads',
             {
                 data: [{
                     Last_Name: data.Full_Name || 'Unknown',
