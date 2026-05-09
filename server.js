@@ -90,24 +90,40 @@ async function sendToZoho(data) {
         //         timeout: 30000
         //     }
         // );
-    
-const response = await axios.post(
-  'https://www.zohoapis.com/crm/v2/Leads',
-  {
-data: [{
-    Last_Name: data.Full_Name || 'Unknown',
-    Email: data.Email || '',
-    Mobile: data.Mobile || '',
-    Description: JSON.stringify(data, null, 2)
-}]
-  },
-  {
-    headers: {
-      Authorization: `Zoho-oauthtoken ${accessToken}`,
-      'Content-Type': 'application/json'
-    }
-  }
+  
+console.log(
+  "FINAL ZOHO PAYLOAD:",
+  JSON.stringify(leadData, null, 2)
 );
+
+
+const leadData = {
+    Last_Name: data.Full_Name || 'Unknown'
+};
+
+if (data.Email) {
+    leadData.Email = data.Email;
+}
+
+if (data.Mobile) {
+    leadData.Mobile = data.Mobile;
+}
+
+leadData.Description = JSON.stringify(data, null, 2);
+
+const response = await axios.post(
+    'https://www.zohoapis.com/crm/v2/Leads',
+    {
+        data: [leadData]
+    },
+    {
+        headers: {
+            Authorization: `Zoho-oauthtoken ${accessToken}`,
+            'Content-Type': 'application/json'
+        }
+    }
+);
+
 
         console.log('✅ Zoho CRM submission successful:', response.data);
         return {
