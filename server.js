@@ -94,11 +94,12 @@ async function sendToZoho(data) {
 const response = await axios.post(
   'https://www.zohoapis.com/crm/v2/Leads',
   {
-    data: [
-      {
-        Last_Name: "Test User"
-      }
-    ]
+data: [{
+    Last_Name: data.Full_Name || 'Unknown',
+    Email: data.Email || '',
+    Mobile: data.Mobile || '',
+    Description: JSON.stringify(data, null, 2)
+}]
   },
   {
     headers: {
