@@ -67,41 +67,43 @@ async function getValidZohoToken() {
 }
 
 // Send to Zoho CRM
+
 async function sendToZoho(data) {
     try {
-        // Get valid access token
+
         const accessToken = await getValidZohoToken();
-        
+
         const response = await axios.post(
-            'https://www.zohoapis.com/crm/v2/Chat_JSON',
+            'https://creator.zoho.com/api/v2/timi-chatbot/form/Webhook',
             {
-                data: [{
-                    Last_Name: data.Full_Name || 'Unknown',
-                    Email: data.Email || '',
-                    Phone: data.Mobile || '',
-                    Description: JSON.stringify(data, null, 2)
-                }]
+                data: {
+                    Multi_Line: JSON.stringify(data, null, 2)
+                }
             },
             {
                 headers: {
-                    'Authorization': `Zoho-oauthtoken ${accessToken}`,
+                    Authorization: `Zoho-oauthtoken ${accessToken}`,
                     'Content-Type': 'application/json'
                 },
                 timeout: 30000
             }
         );
 
+        console.log('✅ Zoho Creator submission successful:', response.data);
 
-        console.log('✅ Zoho CRM submission successful:', response.data);
         return {
-            status: response.status,
-            data: response.data,
-            success: true
+            success: true,
+            data: response.data
         };
-        
+
     } catch (error) {
-        console.error('❌ Zoho CRM API error:', error.response?.data || error.message);
-        throw new Error('Failed to send to Zoho CRM');
+
+        console.error(
+            '❌ Zoho Creator Error:',
+            JSON.stringify(error.response?.data, null, 2)
+        );
+
+        throw new Error('Failed to send to Zoho');
     }
 }
 
