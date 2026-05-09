@@ -74,24 +74,44 @@ async function sendToZoho(data) {
         // Get valid access token
         const accessToken = await getValidZohoToken();
         
-        const response = await axios.post(
-            'https://www.zohoapis.com/crm/v2/Leads',
-            {
-                data: [{
-                    Last_Name: data.Full_Name || 'Unknown',
-                    Email: data.Email || '',
-                    Phone: data.Mobile || '',
-                    Description: JSON.stringify(data, null, 2)
-                }]
-            },
-            {
-                headers: {
-                    'Authorization': `Zoho-oauthtoken ${accessToken}`,
-                    'Content-Type': 'application/json'
-                },
-                timeout: 30000
-            }
-        );
+        // const response = await axios.post(
+        //     'https://www.zohoapis.com/crm/v2/Leads',
+        //     {
+        //         data: [{
+        //             Last_Name: data.Full_Name || 'Unknown',
+        //             Email: data.Email || '',
+        //             Phone: data.Mobile || '',
+        //             Description: JSON.stringify(data, null, 2)
+        //         }]
+        //     },
+        //     {
+        //         headers: {
+        //             'Authorization': `Zoho-oauthtoken ${accessToken}`,
+        //             'Content-Type': 'application/json'
+        //         },
+        //         timeout: 30000
+        //     }
+        // );
+    
+const response = await axios.post(
+  'https://www.zohoapis.com.au/crm/v2/Leads',
+  {
+    data: [{
+      Last_Name: "Test"
+    }]
+  },
+  {
+    headers: {
+      Authorization: `Zoho-oauthtoken ${accessToken}`,
+      'Content-Type': 'application/json'
+    }
+  }
+);
+console.log(
+  "Zoho full error:",
+  JSON.stringify(error.response?.data, null, 2)
+);
+
 
         console.log('✅ Zoho CRM submission successful:', response.data);
         return {
