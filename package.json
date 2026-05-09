@@ -8,14 +8,19 @@
     "dev": "nodemon server.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
+    "axios": "^1.6.0",
     "cors": "^2.8.5",
-    "axios": "^1.6.0"
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
   },
-  "keywords": ["chatbot", "zoho", "roboloans"],
+  "keywords": [
+    "chatbot",
+    "zoho",
+    "roboloans"
+  ],
   "author": "Roboloans",
   "license": "MIT"
 }

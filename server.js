@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const path = require('path');
+const fetch = require('node-fetch');
 
 const app = express();
 app.use(cors());
@@ -10,6 +11,62 @@ app.use(express.static('.'));
 
 // Store submissions (in production, use database)
 const submissions = [];
+
+// Zoho OAuth configuration
+const ZOHO_CONFIG = {
+    refresh_token: "1000.af1bc19a73fe647600ca9645ebb1e0ad.b3bb7cba00dc14d7feacaefcf289a884",
+    client_id: "1000.UIDY0FULCCZQ5BRXHA8CSDY3UW4WZV",
+    client_secret: "217ee51e20bc96fc882c0e8d9a392a22e5c677db11",
+    redirect_uri: "http://www.google.call2back"
+};
+
+// Store current access token
+let currentAccessToken = null;
+let tokenExpiry = null;
+
+async function getZohoAccessToken() {
+    try {
+        const response = await fetch("https://accounts.zoho.com/oauth/v2/token", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams({
+                refresh_token: ZOHO_CONFIG.refresh_token,
+                client_id: ZOHO_CONFIG.client_id,
+                client_secret: ZOHO_CONFIG.client_secret,
+                redirect_uri: ZOHO_CONFIG.redirect_uri,
+                grant_type: "refresh_token"
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.access_token) {
+            currentAccessToken = data.access_token;
+            // Set token expiry (Zoho tokens typically last 1 hour)
+            tokenExpiry = Date.now() + (data.expires_in || 3600) * 1000;
+            console.log("Zoho token refreshed successfully");
+            return data.access_token;
+        } else {
+            throw new Error("No access token received");
+        }
+
+    } catch (error) {
+        console.error("Zoho token refresh error:", error);
+        throw error;
+    }
+}
+
+async function getValidZohoToken() {
+    // Check if we have a valid token
+    if (currentAccessToken && tokenExpiry && Date.now() < tokenExpiry) {
+        return currentAccessToken;
+    }
+    
+    // Get new token
+    return await getZohoAccessToken();
+}
 
 // Serve the bot HTML file
 app.get('/', (req, res) => {
@@ -104,6 +161,9 @@ app.get('/admin', (req, res) => {
 // Send to Zoho CRM
 async function sendToZoho(data) {
     try {
+        // Get valid access token
+        const accessToken = await getValidZohoToken();
+        
         const response = await axios.post(
             'https://www.zohoapis.com/crm/v2/Chat_JSON',
             {
@@ -116,7 +176,7 @@ async function sendToZoho(data) {
             },
             {
                 headers: {
-                    'Authorization': 'Zoho-oauthtoken 1000.bd0f029855f4cb60b28a9c2ddfafff33.4131d93c21de52816708a3319eb43060',
+                    'Authorization': `Zoho-oauthtoken ${accessToken}`,
                     'Content-Type': 'application/json'
                 },
                 timeout: 30000
@@ -135,6 +195,7 @@ async function sendToZoho(data) {
         
         // Try alternative Zoho endpoint
         try {
+            const accessToken = await getValidZohoToken();
             const altResponse = await axios.post(
                 'https://creator.zoho.com/api/v2/timi-chatbot/form/Webhook',
                 {
@@ -144,7 +205,7 @@ async function sendToZoho(data) {
                 },
                 {
                     headers: {
-                        'Authorization': 'Zoho-oauthtoken 1000.bd0f029855f4cb60b28a9c2ddfafff33.4131d93c21de52816708a3319eb43060',
+                        'Authorization': `Zoho-oauthtoken ${accessToken}`,
                         'Content-Type': 'application/json'
                     },
                     timeout: 30000
@@ -304,6 +365,6 @@ app.get('/health', (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log(`Bot available at: http://localhost:${PORT}`);
+  console.log(`Bot available at: https://chatbot-wordpress.onrender.com`);
   console.log('Zoho webhook endpoint: /send-to-zoho');
 });
