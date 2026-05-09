@@ -17,7 +17,6 @@ const ZOHO_CONFIG = {
     refresh_token: "1000.af1bc19a73fe647600ca9645ebb1e0ad.b3bb7cba00dc14d7feacaefcf289a884",
     client_id: "1000.UIDY0FULCCZQ5BRXHA8CSDY3UW4WZV",
     client_secret: "217ee51e20bc96fc882c0e8d9a392a22e5c677db11",
-    redirect_uri: "http://www.google.call2back"
 };
 
 // Store current access token
@@ -35,7 +34,6 @@ async function getZohoAccessToken() {
                 refresh_token: ZOHO_CONFIG.refresh_token,
                 client_id: ZOHO_CONFIG.client_id,
                 client_secret: ZOHO_CONFIG.client_secret,
-                redirect_uri: ZOHO_CONFIG.redirect_uri,
                 grant_type: "refresh_token"
             })
         });
@@ -94,11 +92,13 @@ async function sendToZoho(data) {
         // );
     
 const response = await axios.post(
-  'https://www.zohoapis.com.au/crm/v2/Leads',
+  'https://www.zohoapis.com/crm/v2/Leads',
   {
-    data: [{
-      Last_Name: "Test"
-    }]
+    data: [
+      {
+        Last_Name: "Test User"
+      }
+    ]
   },
   {
     headers: {
@@ -107,11 +107,6 @@ const response = await axios.post(
     }
   }
 );
-console.log(
-  "Zoho full error:",
-  JSON.stringify(error.response?.data, null, 2)
-);
-
 
         console.log('✅ Zoho CRM submission successful:', response.data);
         return {
@@ -137,7 +132,7 @@ app.get('/test-zoho', async (req, res) => {
     const accessToken = await getValidZohoToken();
 
     const response = await axios.get(
-      'https://www.zohoapis.com.au/crm/v2/settings/modules',
+      'https://www.zohoapis.com/crm/v2/settings/modules',
       {
         headers: {
           Authorization: `Zoho-oauthtoken ${accessToken}`
