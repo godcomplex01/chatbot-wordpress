@@ -129,7 +129,25 @@ app.get('/', (req, res) => {
 
 app.get('/test-zoho', async (req, res) => {
   try {
-    const accessToken = await getValidZohoToken();
+
+    const tokenResponse = await axios.post(
+      'https://accounts.zoho.com/oauth/v2/token',
+      new URLSearchParams({
+        refresh_token: ZOHO_CONFIG.refresh_token,
+        client_id: ZOHO_CONFIG.client_id,
+        client_secret: ZOHO_CONFIG.client_secret,
+        grant_type: 'refresh_token'
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    );
+
+    const accessToken = tokenResponse.data.access_token;
+
+    console.log("Fresh token:", accessToken);
 
     const response = await axios.get(
       'https://www.zohoapis.com/crm/v2/settings/modules',
@@ -143,8 +161,9 @@ app.get('/test-zoho', async (req, res) => {
     res.json(response.data);
 
   } catch (error) {
+
     console.log(
-      'Zoho test error:',
+      "FULL ERROR:",
       JSON.stringify(error.response?.data, null, 2)
     );
 
