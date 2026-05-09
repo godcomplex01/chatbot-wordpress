@@ -91,10 +91,6 @@ async function sendToZoho(data) {
         //     }
         // );
   
-console.log(
-  "FINAL ZOHO PAYLOAD:",
-  JSON.stringify(leadData, null, 2)
-);
 
 
 const leadData = {
@@ -110,6 +106,11 @@ if (data.Mobile) {
 }
 
 leadData.Description = JSON.stringify(data, null, 2);
+
+        console.log(
+  "FINAL ZOHO PAYLOAD:",
+  JSON.stringify(leadData, null, 2)
+);
 
 const response = await axios.post(
     'https://www.zohoapis.com/crm/v2/Leads',
