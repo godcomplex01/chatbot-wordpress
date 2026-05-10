@@ -75,23 +75,22 @@ async function sendToZoho(data) {
 
         // CRM custom module payload
  
-const leadData = {
-    Name: data.Full_Name || 'Unknown',
-    Company: 'Roboloans',
-    Description: JSON.stringify(data, null, 2)
-};
-
-if (data.Email) {
-    leadData.Email = data.Email;
-}
-
-if (data.Mobile) {
-    leadData.Mobile = data.Mobile;
-}
 
 const payload = {
-    data: [leadData]
+    data: [
+        {
+            Full_Name: data.Full_Name || '',
+            Email: data.Email || '',
+            Mobile: data.Mobile || '',
+            Date_of_Birth: data.Date_of_Birth || '',
+            Residency: data.Residency || '',
+            Has_Licence: data.Has_Licence || '',
+            Bankrupt_Part9: data.Bankrupt_Part9 || '',
+            Status: data.Status || ''
+        }
+    ]
 };
+
 
      
 console.log(
