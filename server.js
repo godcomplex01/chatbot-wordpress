@@ -21,7 +21,7 @@ async function saveChatData(chatbotData) {
     'https://www.zohoapis.com/crm/v2.1/chat_data',
     {
       data: [{
-        Data: chatbotData  // yahan apne multiline field ka exact API name daal
+        data: chatbotData  // yahan apne multiline field ka exact API name daal
       }]
     },
     {
