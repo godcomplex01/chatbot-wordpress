@@ -78,10 +78,7 @@ async function sendToZoho(data) {
 const payload = {
     data: [
         {
-            Name: data.Full_Name || '',
-            Email: data.Email || '',
-            Phone: data.Mobile || '',
-            Description: `Chatbot Submission:\n\nFull Name: ${data.Full_Name || ''}\nEmail: ${data.Email || ''}\nMobile: ${data.Mobile || ''}\nDate of Birth: ${data.Date_of_Birth || ''}\nResidency: ${data.Residency || ''}\nHas Licence: ${data.Has_Licence || ''}\nBankrupt: ${data.Bankrupt_Part9 || ''}\n\nAll Data:\n${JSON.stringify(data, null, 2)}`
+           Key: "Status: Knockout\nFull_Name: sdaf\nEmail: sadf@gmail.com\nMobile: \nDate_of_Birth: 12/12/2002\nResidency: Australian Citizen\nHas_Licence: No\nBankrupt_Part9: Yes"
         }
     ]
 };
