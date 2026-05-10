@@ -75,21 +75,30 @@ async function sendToZoho(data) {
 
         // CRM custom module payload
  
-const payload = {
-    data: [
-        {
-            Name: data.Full_Name || 'Unknown',
-            Email: data.Email || '',
-            Mobile: data.Mobile || '',
-            Company: 'Roboloans',
-            Description: JSON.stringify(data, null, 2)
-        }
-    ]
+const leadData = {
+    Name: data.Full_Name || 'Unknown',
+    Company: 'Roboloans',
+    Description: JSON.stringify(data, null, 2)
 };
-        console.log(
-            '📤 Sending to Zoho:',
-            JSON.stringify(payload, null, 2)
-        );
+
+if (data.Email) {
+    leadData.Email = data.Email;
+}
+
+if (data.Mobile) {
+    leadData.Mobile = data.Mobile;
+}
+
+const payload = {
+    data: [leadData]
+};
+
+     
+console.log(
+  'FINAL CLEAN PAYLOAD:',
+  JSON.stringify(payload, null, 2)
+);
+
 
         const response = await axios.post(
             'https://www.zohoapis.com/crm/v2.1/chat_data',
