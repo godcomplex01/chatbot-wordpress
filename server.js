@@ -68,15 +68,73 @@ async function getValidZohoToken() {
 
 // Send to Zoho CRM
 
-async function sendToZoho(data) {
-    try {
+// async function sendToZoho(data) {
+//     try {
 
-        const accessToken = await getValidZohoToken();
+//         const accessToken = await getValidZohoToken();
 
-        // CRM custom module payload
+//         // CRM custom module payload
  
 
-const payload = {
+// const payload = {
+//     data: [
+//         {
+//             Full_Name: data.Full_Name || '',
+//             Email: data.Email || '',
+//             Mobile: data.Mobile || '',
+//             Date_of_Birth: data.Date_of_Birth || '',
+//             Residency: data.Residency || '',
+//             Has_Licence: data.Has_Licence || '',
+//             Bankrupt_Part9: data.Bankrupt_Part9 || '',
+//             Status: data.Status || ''
+//         }
+//     ]
+// };
+
+
+     
+// console.log(
+//   'FINAL CLEAN PAYLOAD:',
+//   JSON.stringify(payload, null, 2)
+// );
+
+
+//         const response = await axios.post(
+//             'https://www.zohoapis.com/crm/v2.1/chat_data',
+//             payload,
+//             {
+//                 headers: {
+//                     Authorization: `Zoho-oauthtoken ${accessToken}`,
+//                     'Content-Type': 'application/json'
+//                 },
+//                 timeout: 30000
+//             }
+//         );
+
+//         console.log(
+//             '✅ Zoho CRM submission successful:',
+//             JSON.stringify(response.data, null, 2)
+//         );
+
+//         return {
+//             success: true,
+//             data: response.data
+//         };
+
+//     } catch (error) {
+
+//         console.error(
+//             '❌ Zoho CRM Error:',
+//             JSON.stringify(error.response?.data, null, 2)
+//         );
+
+//         throw new Error('Failed to send to Zoho');
+//     }
+// }
+
+ async function saveChatData(chatbotData) {
+  const accessToken = await getAccessToken();
+     const payload = {
     data: [
         {
             Full_Name: data.Full_Name || '',
@@ -91,46 +149,29 @@ const payload = {
     ]
 };
 
-
-     
-console.log(
-  'FINAL CLEAN PAYLOAD:',
-  JSON.stringify(payload, null, 2)
-);
-
-
-        const response = await axios.post(
-            'https://www.zohoapis.com/crm/v2.1/chat_data',
-            payload,
-            {
-                headers: {
-                    Authorization: `Zoho-oauthtoken ${accessToken}`,
-                    'Content-Type': 'application/json'
-                },
-                timeout: 30000
-            }
-        );
-
-        console.log(
-            '✅ Zoho CRM submission successful:',
-            JSON.stringify(response.data, null, 2)
-        );
-
-        return {
-            success: true,
-            data: response.data
-        };
-
-    } catch (error) {
-
-        console.error(
-            '❌ Zoho CRM Error:',
-            JSON.stringify(error.response?.data, null, 2)
-        );
-
-        throw new Error('Failed to send to Zoho');
+  const response = await axios.post(
+    'https://www.zohoapis.com/crm/v2.1/chat_data',
+    {
+      data: [{
+        Data: payLoad  // yahan apne multiline field ka exact API name daal
+      }]
+    },
+    {
+      headers: {
+        'Authorization': Zoho-oauthtoken ${accessToken},
+        'Content-Type':  'application/json'
+      }
     }
+  );
+
+  console.log('✅ Saved:', response.data);
 }
+
+// Chatbot se jo bhi data aaye woh yahan pass karo
+
+
+saveChatData(chatbotData)
+  .catch(err => console.error('❌ Error:', err.response?.data || err.message));
 
 // Serve bot HTML file
 app.get('/', (req, res) => {
