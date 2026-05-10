@@ -70,84 +70,47 @@ async function getValidZohoToken() {
 
 async function sendToZoho(data) {
     try {
-        const accessToken = await getValidZohoToken();
-        
-        // Create payload with actual user data
-        const payload = {
-            data: [
-                {
-                    Full_Name: data.Full_Name || '',
-                    Email: data.Email || '',
-                    Mobile: data.Mobile || '',
-                    Date_of_Birth: data.Date_of_Birth || '',
-                    Residency: data.Residency || '',
-                    Has_Licence: data.Has_Licence || '',
-                    Which_State_Licence: data.Which_State_Licence || '',
-                    Licence_Type: data.Licence_Type || '',
-                    Bankrupt_Part9: data.Bankrupt_Part9 || '',
-                    Self_Rated_Credit: data.Self_Rated_Credit || '',
-                    Has_Loans: data.Has_Loans || '',
-                    Has_Credit_Cards: data.Has_Credit_Cards || '',
-                    Has_Small_Loans: data.Has_Small_Loans || '',
-                    Has_Defaults: data.Has_Defaults || '',
-                    Income_Type: data.Income_Type || '',
-                    Employment_Basis: data.Employment_Basis || '',
-                    Income_Amount: data.Income_Amount || '',
-                    Income_Frequency: data.Income_Frequency || '',
-                    Self_Emp_Type: data.Self_Emp_Type || '',
-                    Has_ABN: data.Has_ABN || '',
-                    ABN: data.ABN || '',
-                    Beside_Centrelink: data.Beside_Centrelink || '',
-                    Centrelink_Extra: data.Centrelink_Extra || '',
-                    New_Start: data.New_Start || '',
-                    Share_Expenses: data.Share_Expenses || '',
-                    Relationship: data.Relationship || '',
-                    Children: data.Children || '',
-                    Children_No: data.Children_No || '',
-                    Children_Ages: data.Children_Ages || '',
-                    Current_Address: data.Current_Address || '',
-                    Address_Types: data.Address_Types || '',
-                    Renting: data.Renting || '',
-                    Week_Rent: data.Week_Rent || '',
-                    Current_Address_Time3yrs: data.Current_Address_Time3yrs || '',
-                    prev_address_1: data.prev_address_1 || '',
-                    prev_address_1_duration: data.prev_address_1_duration || '',
-                    prev_address_2: data.prev_address_2 || '',
-                    prev_address_2_duration: data.prev_address_2_duration || '',
-                    Employed_Current_Work: data.Employed_Current_Work || '',
-                    Employed_Current_Work_Industry: data.Employed_Current_Work_Industry || '',
-                    Employed_Current_Job_Duration: data.Employed_Current_Job_Duration || '',
-                    Employed_Prev_Occupation: data.Employed_Prev_Occupation || '',
-                    Employed_Prev_Work_Industry: data.Employed_Prev_Work_Industry || '',
-                    Employed_Prev_Job_Duration: data.Employed_Prev_Job_Duration || '',
-                    Confirm_Loans: data.Confirm_Loans || '',
-                    Confirm_Credit_Cards: data.Confirm_Credit_Cards || '',
-                    Car_Asset: data.Car_Asset || '',
-                    Cars_Value: data.Cars_Value || '',
-                    Home_Asset: data.Home_Asset || '',
-                    Home_Value: data.Home_Value || '',
-                    Knocked_Out: data.Knocked_Out || false,
-                    Knockout_Reason: data.Knockout_Reason || '',
-                    Description: JSON.stringify(data, null, 2)
-                }
-            ]
-        };
-        
-        console.log('📝 FINAL PAYLOAD WITH USER DATA:', JSON.stringify(payload, null, 2));
-        console.log('🔍 Attempting to send to Zoho CRM...');
-        console.log('🔍 Endpoint:', 'https://www.zohoapis.com/crm/v2.1/chat_data');
-        console.log('🔍 Payload keys:', Object.keys(payload.data[0]));
 
-        const response = await axios.post(
-            'https://www.zohoapis.com/crm/v2.1/chat_data',
-            payload,
-            {
-                headers: {
-                    'Authorization': `Zoho-oauthtoken ${accessToken}`,
-                    'Content-Type': 'application/json'
-                }
-            }
-        );
+        const accessToken = await getValidZohoToken();
+ 
+
+// Try with standard Zoho CRM fields first
+const payload = {
+    data: [
+          {
+            Key: "keyValue"
+          }
+        ]
+};
+
+
+     
+console.log(
+  'FINAL CLEAN PAYLOAD:',
+  JSON.stringify(payload, null, 2)
+);
+
+console.log('🔍 Attempting to send to Zoho CRM...');
+console.log('🔍 Endpoint:', 'https://www.zohoapis.com/crm/v2.1/chat_data');
+console.log('🔍 Payload keys:', Object.keys(payload.data[0]));
+
+
+      const response = await axios.post(
+  'https://www.zohoapis.com/crm/v2.1/chat_data',
+  {
+    data: [
+      {
+        Key: "Status: Knockout\nFull_Name: sdaf\nEmail: sadf@gmail.com\nMobile: \nDate_of_Birth: 12/12/2002\nResidency: Australian Citizen\nHas_Licence: No\nWhich_State_Licence: \nLicence_Type: \nBankrupt_Part9: Yes\nSelf_Rated_Credit: \nHas_Loans: \nHas_Credit_Cards: \nHas_Small_Loans: \nHas_Defaults: \nIncome_Type: \nEmployment_Basis: \nIncome_Amount: \nIncome_Frequency: \nSelf_Emp_Type: \nHas_ABN: \nABN: \nBeside_Centrelink: \nCentrelink_Extra: \nNew_Start: \nShare_Expenses: \nRelationship: \nChildren: \nChildren_No: \nChildren_Ages: \nCurrent_Address: \nAddress_Types: \nRenting: \nWeek_Rent: \nCurrent_Address_Time3yrs: \nprev_address_1: \nprev_address_1_duration: \nprev_address_2: \nprev_address_2_duration: \nEmployed_Current_Work: \nEmployed_Current_Work_Industry: \nEmployed_Current_Job_Duration: \nEmployed_Prev_Occupation: \nEmployed_Prev_Work_Industry: \nEmployed_Prev_Job_Duration: \nCar_Asset: \nCars_Value: \nHome_Asset: \nHome_Value: \nProperty_Asset: \nOther_Property_Value: \nHas_Savings: \nSavings_Amount: \nHas_Super: \nSuper_Amount: \nConsent: \nCentrelink_History_Profile: \nLoans: []\nCredit_Cards: []"
+      }
+    ]
+  },
+  {
+    headers: {
+      'Authorization': `Zoho-oauthtoken 1000.cf094689fcbcc1e679cda435031fdb75.1b2fb0025afed6d167f09e8e8c2a3fa2`,
+      'Content-Type':  'application/json'
+    }
+  }
+);
         
         console.log(
             '✅ Zoho CRM submission successful:',
