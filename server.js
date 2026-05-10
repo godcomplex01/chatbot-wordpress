@@ -7,15 +7,14 @@ async function insertChatData() {
       {
         data: [
           {
-            data: {
-              "name" : "value"
+            name: "value"
           }
         ]
       },
       {
         headers: {
-          'Authorization': 'Zoho-oauthtoken 1000.3a26812340880e9f788d79d21f40ab03.92d6d42d64cb10bba19123b7811db669',
-          'Content-Type':  'application/json'
+          Authorization: 'Zoho-oauthtoken 1000.3a26812340880e9f788d79d21f40ab03.92d6d42d64cb10bba19123b7811db669',
+          'Content-Type': 'application/json'
         }
       }
     );
