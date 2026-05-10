@@ -94,12 +94,12 @@ console.log(
 );
 
 console.log('🔍 Attempting to send to Zoho CRM...');
-console.log('🔍 Endpoint:', 'https://www.zohoapis.com/crm/v2.1/Leads');
+console.log('🔍 Endpoint:', 'https://www.zohoapis.com/crm/v2.1/chat_data');
 console.log('🔍 Payload keys:', Object.keys(payload.data[0]));
 
 
         const response = await axios.post(
-            'https://www.zohoapis.com/crm/v2.1/Leads',
+            'https://www.zohoapis.com/crm/v2.1/chat_data',
             payload,
             {
                 headers: {
