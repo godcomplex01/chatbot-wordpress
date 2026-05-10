@@ -77,10 +77,10 @@ async function sendToZoho(data) {
 // Try with standard Zoho CRM fields first
 const payload = {
     data: [
-        {
-           Key: "Status: Knockout\nFull_Name: sdaf\nEmail: sadf@gmail.com\nMobile: \nDate_of_Birth: 12/12/2002\nResidency: Australian Citizen\nHas_Licence: No\nBankrupt_Part9: Yes"
-        }
-    ]
+          {
+            Key: "keyValue"
+          }
+        ]
 };
 
 
