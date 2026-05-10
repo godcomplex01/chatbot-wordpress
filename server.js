@@ -158,7 +158,7 @@ async function getValidZohoToken() {
     },
     {
       headers: {
-        'Authorization': Zoho-oauthtoken ${accessToken},
+        'Authorization': `Zoho-oauthtoken ${accessToken}`,
         'Content-Type':  'application/json'
       }
     }
