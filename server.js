@@ -191,10 +191,11 @@ app.post('/api/submit', async (req, res) => {
     try {
         console.log('📝 Received submission:', req.body);
         
-        const { data } = req.body;
+        // Extract payLoad from request body
+        const payLoad = req.body.data;
         
         // Validate required fields
-        if (!data.Full_Name || !data.Email) {
+        if (!payLoad.Full_Name || !payLoad.Email) {
             return res.status(400).json({
                 success: false,
                 message: 'Name and email are required'
@@ -204,7 +205,7 @@ app.post('/api/submit', async (req, res) => {
         // Store submission
         const submission = {
             id: Date.now(),
-            ...data,
+            ...payLoad,
             timestamp: new Date().toISOString(),
             status: 'Pending'
         };
@@ -214,7 +215,7 @@ app.post('/api/submit', async (req, res) => {
         // Send to Zoho
         let zohoResponse = null;
         try {
-            zohoResponse = await sendToZoho(data);
+            zohoResponse = await sendToZoho(payLoad);
             submission.status = 'Sent to Zoho';
             submission.zohoResponse = zohoResponse;
         } catch (error) {
