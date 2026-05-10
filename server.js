@@ -131,10 +131,7 @@ async function getValidZohoToken() {
 //         throw new Error('Failed to send to Zoho');
 //     }
 // }
-
- async function saveChatData(chatbotData) {
-  const accessToken = await getAccessToken();
-     const payload = {
+  const payload = {
     data: [
         {
             Full_Name: data.Full_Name || '',
@@ -148,6 +145,10 @@ async function getValidZohoToken() {
         }
     ]
 };
+
+ async function saveChatData(chatbotData) {
+  const accessToken = await getAccessToken();
+   
 
   const response = await axios.post(
     'https://www.zohoapis.com/crm/v2.1/chat_data',
