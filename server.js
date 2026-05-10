@@ -73,13 +73,25 @@ async function sendToZoho(data) {
 
         const accessToken = await getValidZohoToken();
 
+        // CRM custom module payload
+        const payload = {
+            data: [
+                {
+                    Name: data.Full_Name || 'Unknown',
+                    Email: data.Email || '',
+                    Chat_JSON: JSON.stringify(data, null, 2)
+                }
+            ]
+        };
+
+        console.log(
+            '📤 Sending to Zoho:',
+            JSON.stringify(payload, null, 2)
+        );
+
         const response = await axios.post(
             'https://www.zohoapis.com/crm/v2.1/chat_data',
-            {
-                data: {
-                    Multi_Line: JSON.stringify(data, null, 2)
-                }
-            },
+            payload,
             {
                 headers: {
                     Authorization: `Zoho-oauthtoken ${accessToken}`,
@@ -89,7 +101,10 @@ async function sendToZoho(data) {
             }
         );
 
-        console.log('✅ Zoho Creator submission successful:', response.data);
+        console.log(
+            '✅ Zoho CRM submission successful:',
+            JSON.stringify(response.data, null, 2)
+        );
 
         return {
             success: true,
@@ -99,7 +114,7 @@ async function sendToZoho(data) {
     } catch (error) {
 
         console.error(
-            '❌ Zoho Creator Error:',
+            '❌ Zoho CRM Error:',
             JSON.stringify(error.response?.data, null, 2)
         );
 
