@@ -7,7 +7,8 @@ async function insertChatData() {
       {
         data: [
           {
-            data: "hello"
+            data: {
+              "name" : "value",
           }
         ]
       },
