@@ -74,7 +74,7 @@ async function sendToZoho(data) {
         const accessToken = await getValidZohoToken();
 
         const response = await axios.post(
-            'https://creator.zoho.com/api/v2/timi-chatbot/form/Webhook',
+            'https://accounts.zoho.com/oauth/v2/token',
             {
                 data: {
                     Multi_Line: JSON.stringify(data, null, 2)
