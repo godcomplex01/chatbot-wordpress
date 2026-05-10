@@ -100,7 +100,7 @@ console.log(
 
 
         const response = await axios.post(
-            'https://www.zohoapis.com/crm/v2.1/Leads',
+            'https://www.zohoapis.com/crm/v2.1/chat_data'
             payload,
             {
                 headers: {
