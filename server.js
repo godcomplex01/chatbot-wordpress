@@ -72,8 +72,6 @@ async function sendToZoho(data) {
     try {
 
         const accessToken = await getValidZohoToken();
-
-//         // CRM custom module payload
  
 
 const payload = {
@@ -86,7 +84,42 @@ const payload = {
             Residency: data.Residency || '',
             Has_Licence: data.Has_Licence || '',
             Bankrupt_Part9: data.Bankrupt_Part9 || '',
-            Status: data.Status || ''
+            Status: data.Status || '',
+            // Add all other fields from chatbot
+            Relationship: data.Relationship || '',
+            Children: data.Children || '',
+            Children_No: data.Children_No || '',
+            Children_Ages: data.Children_Ages || '',
+            Current_Address: data.Current_Address || '',
+            Address_Types: data.Address_Types || '',
+            Week_Rent: data.Week_Rent || '',
+            Rent_Confirm: data.Rent_Confirm || '',
+            Current_Address_Time3yrs: data.Current_Address_Time3yrs || '',
+            prev_address_1: data.prev_address_1 || '',
+            prev_address_1_duration: data.prev_address_1_duration || '',
+            prev_address_2_prompt: data.prev_address_2_prompt || '',
+            Income_Type: data.Income_Type || '',
+            Employment_Basis: data.Employment_Basis || '',
+            Income_Amount: data.Income_Amount || '',
+            Income_Frequency: data.Income_Frequency || '',
+            Self_Emp_Type: data.Self_Emp_Type || '',
+            Has_ABN: data.Has_ABN || '',
+            ABN: data.ABN || '',
+            Beside_Centrelink: data.Beside_Centrelink || '',
+            Centrelink_Extra: data.Centrelink_Extra || '',
+            New_Start: data.New_Start || '',
+            Centrelink_Income_Amount: data.Centrelink_Income_Amount || '',
+            Centrelink_Income_Freq: data.Centrelink_Income_Freq || '',
+            Mobile_Check: data.Mobile_Check || '',
+            Self_Rated_Credit: data.Self_Rated_Credit || '',
+            Has_Loans: data.Has_Loans || '',
+            Has_Credit_Cards: data.Has_Credit_Cards || '',
+            Has_Small_Loans: data.Has_Small_Loans || '',
+            Has_Defaults: data.Has_Defaults || '',
+            Which_State_Licence: data.Which_State_Licence || '',
+            Licence_Type: data.Licence_Type || '',
+            Knocked_Out: data.Knocked_Out || '',
+            Knockout_Reason: data.Knockout_Reason || ''
         }
     ]
 };
