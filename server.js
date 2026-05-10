@@ -74,7 +74,7 @@ async function sendToZoho(data) {
         const accessToken = await getValidZohoToken();
 
         const response = await axios.post(
-            'https://accounts.zoho.com/oauth/v2/token',
+            'https://www.zohoapis.com/crm/v2.1/chat_data',
             {
                 data: {
                     Multi_Line: JSON.stringify(data, null, 2)
