@@ -74,16 +74,18 @@ async function sendToZoho(data) {
         const accessToken = await getValidZohoToken();
 
         // CRM custom module payload
-        const payload = {
-            data: [
-                {
-                    Name: data.Full_Name || 'Unknown',
-                    Email: data.Email || '',
-                    Chat_JSON: JSON.stringify(data, null, 2)
-                }
-            ]
-        };
-
+ 
+const payload = {
+    data: [
+        {
+            Name: data.Full_Name || 'Unknown',
+            Email: data.Email || '',
+            Mobile: data.Mobile || '',
+            Company: 'Roboloans',
+            Description: JSON.stringify(data, null, 2)
+        }
+    ]
+};
         console.log(
             '📤 Sending to Zoho:',
             JSON.stringify(payload, null, 2)
