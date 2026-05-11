@@ -41,6 +41,9 @@ async function getZohoAccessToken() {
         });
 
         const data = await response.json();
+        
+        console.log("🔍 Zoho token response:", JSON.stringify(data, null, 2));
+        console.log("🔍 Response status:", response.status);
 
         if (data.access_token) {
             currentAccessToken = data.access_token;
@@ -49,7 +52,8 @@ async function getZohoAccessToken() {
             console.log("✅ Zoho token refreshed successfully");
             return data.access_token;
         } else {
-            throw new Error("No access token received");
+            console.error("❌ Token response error:", data);
+            throw new Error(`No access token received. Response: ${JSON.stringify(data)}`);
         }
 
     } catch (error) {
