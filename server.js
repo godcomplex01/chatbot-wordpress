@@ -14,9 +14,14 @@ const submissions = [];
 
 // Zoho OAuth configuration
 const ZOHO_CONFIG = {
-    refresh_token: "1000.cf094689fcbcc1e679cda435031fdb75.1b2fb0025afed6d167f09e8e8c2a3fa2",
-    client_id: "1000.UIDY0FULCCZQ5BRXHA8CSDY3UW4WZV",
-    client_secret: "217ee51e20bc96fc882c0e8d9a392a22e5c677db11",
+    // refresh_token: "1000.cf094689fcbcc1e679cda435031fdb75.1b2fb0025afed6d167f09e8e8c2a3fa2",
+    // client_id: "1000.UIDY0FULCCZQ5BRXHA8CSDY3UW4WZV",
+    // client_secret: "217ee51e20bc96fc882c0e8d9a392a22e5c677db11",
+    refresh_token: '1000.af1bc19a73fe647600ca9645ebb1e0ad.b3bb7cba00dc14d7feacaefcf289a884',
+      client_id:     '1000.UIDY0FULCCZQ5BRXHA8CSDY3UW4WZV',
+      client_secret: '217ee51e20bc96fc882c0e8d9a392a22e5c677db11',
+      redirect_uri:  'http://www.google.call2back',
+      grant_type:    'refresh_token'
 };
 
 // Store current access token
