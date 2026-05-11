@@ -26,7 +26,7 @@ let tokenExpiry = null;
 
 async function getZohoAccessToken() {
     try {
-        const response = await fetch("https://accounts.zoho.com/oauth/v2/token?refresh_token=1000.d3556f7834a913ff8a21de22fdf597fb.bdc917e26ab53d1f66d0f8178168ee1a&client_id=1000.UIDY0FULCCZQ5BRXHA8CSDY3UW4WZV&client_secret=217ee51e20bc96fc882c0e8d9a392a22e5c677db11&redirect_uri=http://www.google.call2back&grant_type=refresh_token", {
+        const response = await fetch("https://accounts.zoho.com/oauth/v2/token", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
