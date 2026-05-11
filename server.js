@@ -14,14 +14,10 @@ const submissions = [];
 
 // Zoho OAuth configuration
 const ZOHO_CONFIG = {
-    // refresh_token: "1000.cf094689fcbcc1e679cda435031fdb75.1b2fb0025afed6d167f09e8e8c2a3fa2",
-    // client_id: "1000.UIDY0FULCCZQ5BRXHA8CSDY3UW4WZV",
-    // client_secret: "217ee51e20bc96fc882c0e8d9a392a22e5c677db11",
-    refresh_token: '1000.d3556f7834a913ff8a21de22fdf597fb.bdc917e26ab53d1f66d0f8178168ee1a',
-      client_id:     '1000.UIDY0FULCCZQ5BRXHA8CSDY3UW4WZV',
-      client_secret: '217ee51e20bc96fc882c0e8d9a392a22e5c677db11',
-      redirect_uri:  'http://www.google.call2back',
-      grant_type:    'refresh_token'
+    refresh_token: "1000.af1bc19a73fe647600ca9645ebb1e0ad.b3bb7cba00dc14d7feacaefcf289a884",
+    client_id: "1000.UIDY0FULCCZQ5BRXHA8CSDY3UW4WZV",
+    client_secret: "217ee51e20bc96fc882c0e8d9a392a22e5c677db11",
+    redirect_uri: "http://www.google.call2back"
 };
 
 // Store current access token
@@ -30,7 +26,7 @@ let tokenExpiry = null;
 
 async function getZohoAccessToken() {
     try {
-        const response = await fetch("https://accounts.zoho.com/oauth/v2/token", {
+        const response = await fetch("https://accounts.zoho.com.au/oauth/v2/token", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -39,6 +35,7 @@ async function getZohoAccessToken() {
                 refresh_token: ZOHO_CONFIG.refresh_token,
                 client_id: ZOHO_CONFIG.client_id,
                 client_secret: ZOHO_CONFIG.client_secret,
+                redirect_uri: ZOHO_CONFIG.redirect_uri,
                 grant_type: "refresh_token"
             })
         });
@@ -91,7 +88,7 @@ const payload = {
 
      
 console.log(
-  'FINAL CLEAN PAYLOAD:',
+  
   JSON.stringify(payload, null, 2)
 );
 
